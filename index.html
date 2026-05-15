@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fadli Yurisman | Developer</title>
+  <meta name="description" content="Fadli Yurisman — Backend Developer, Bot Creator & AI Enthusiast">
+  <meta name="author" content="Fadli Yurisman">
+  <meta name="theme-color" content="#03000F">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+
+  <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+  <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- NOISE OVERLAY -->
+<div class="noise"></div>
+
+<!-- CURSOR -->
+<div class="cursor-dot"></div>
+<div class="cursor-ring"></div>
+
+<!-- INTRO SCREEN -->
+<div class="intro" id="intro">
+  <div class="intro-inner">
+    <div class="intro-line">
+      <span class="intro-word">FADLI</span>
+    </div>
+    <div class="intro-line">
+      <span class="intro-word">YURISMAN</span>
+    </div>
+    <div class="intro-bar"></div>
+  </div>
+</div>
+
+<!-- NEBULA BG -->
+<div class="nebula"></div>
+<canvas id="bg-canvas"></canvas>
+
+<!-- NAV -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <div class="logo">FY<span class="logo-dot">.</span></div>
+    <ul class="nav-links">
+      <li><a href="#hero" class="nav-link">Home</a></li>
+      <li><a href="#about" class="nav-link">About</a></li>
+      <li><a href="#skills" class="nav-link">Skills</a></li>
+      <li><a href="#projects" class="nav-link">Work</a></li>
+      <li><a href="#contact" class="nav-link">Contact</a></li>
+    </ul>
+    <a href="mailto:fadliyurisman@gmail.com" class="nav-cta">Hire Me</a>
+  </div>
+</nav>
+
+<!-- ===========================
+     HERO
+=========================== -->
+<section class="hero" id="hero">
+  <div class="hero-bg-grid"></div>
+
+  <div class="hero-layout">
+
+    <div class="hero-left">
+      <div class="hero-badge">
+        <span class="badge-dot"></span>
+        Available for work
+      </div>
+
+      <h1 class="hero-name">
+        <span class="line-wrap"><em class="hero-line">Fadli</em></span>
+        <span class="line-wrap"><em class="hero-line">Yurisman</em></span>
+      </h1>
+
+      <div class="hero-role" id="typed-role"></div>
+
+      <p class="hero-desc">
+        Backend developer crafting REST APIs, automation bots, and AI-powered tools.
+        I turn complex ideas into clean, scalable systems.
+      </p>
+
+      <div class="hero-actions">
+        <a href="#projects" class="btn-main">View My Work</a>
+        <a href="#contact" class="btn-ghost">Get In Touch</a>
+      </div>
+
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-num">3+</span>
+          <span class="stat-label">Years Coding</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num">10+</span>
+          <span class="stat-label">Projects Done</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num">5+</span>
+          <span class="stat-label">Tech Stacks</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="avatar-wrap">
+        <div class="avatar-ring r1"></div>
+        <div class="avatar-ring r2"></div>
+        <div class="avatar-ring r3"></div>
+        <div class="avatar-core">
+          <canvas id="avatar-canvas"></canvas>
+        </div>
+        <div class="avatar-badge ab1">Node.js</div>
+        <div class="avatar-badge ab2">MySQL</div>
+        <div class="avatar-badge ab3">AI Bot</div>
+        <div class="avatar-badge ab4">REST API</div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="scroll-hint">
+    <div class="scroll-mouse"><span></span></div>
+    <p>Scroll</p>
+  </div>
+</section>
+
+<!-- ===========================
+     ABOUT
+=========================== -->
+<section class="section" id="about">
+  <div class="wrap">
+    <div class="sec-label">Who I Am</div>
+    <h2 class="sec-title">The Story<br><span>Behind the Code</span></h2>
+
+    <div class="about-grid">
+      <div class="about-text">
+        <p>
+          I'm a final-year Informatics Engineering student at Universitas Putra Indonesia YPTK Padang,
+          graduating October 2026. My core focus is backend development — building systems that are
+          fast, clean, and built to scale.
+        </p>
+        <p style="margin-top:16px">
+          Beyond web development, I build AI-powered automation bots for WhatsApp and Discord,
+          and I'm currently diving deep into Blockchain development. I believe great software is
+          invisible — it just works.
+        </p>
+        <div class="about-tags">
+          <span>Problem Solver</span>
+          <span>Fast Learner</span>
+          <span>Team Player</span>
+          <span>Open to Relocation</span>
+        </div>
+      </div>
+
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <span class="tl-date">Aug – Dec 2025</span>
+            <h4>Backend Developer</h4>
+            <p>BPS Kabupaten Pelalawan — Built REST APIs with Node.js & PHP, managed MySQL databases for internal systems.</p>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <span class="tl-date">Aug – Nov 2025</span>
+            <h4>IT Support</h4>
+            <p>BPS Kabupaten Pelalawan — Hardware/software support, network troubleshooting, system configuration.</p>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <span class="tl-date">2023 – Present</span>
+            <h4>Freelance Developer</h4>
+            <p>Built web apps, bots, and automation tools for various clients independently.</p>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-content">
+            <span class="tl-date">Aug 2022</span>
+            <h4>Started S1 Teknik Informatika</h4>
+            <p>UPI YPTK Padang — Focus on web development and data analysis.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===========================
+     SKILLS
+=========================== -->
+<section class="section" id="skills">
+  <div class="wrap">
+    <div class="sec-label">What I Know</div>
+    <h2 class="sec-title">Skills &<br><span>Technologies</span></h2>
+
+    <div class="skills-grid">
+
+      <div class="skill-cat">
+        <div class="skill-cat-icon">⚙️</div>
+        <h3>Backend</h3>
+        <div class="skill-bars">
+          <div class="skill-bar-item">
+            <div class="sb-top"><span>Node.js</span><span>90%</span></div>
+            <div class="sb-track"><div class="sb-fill" data-w="90"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="sb-top"><span>Express.js</span><span>88%</span></div>
+            <div class="sb-track"><div class="sb-fill" data-w="88"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="sb-top"><span>PHP</span><span>80%</span></div>
+            <div class="sb-track"><div class="sb-fill" data-w="80"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="sb-top"><span>REST API</span><span>92%</span></div>
+            <div class="sb-track"><div class="sb-fill" data-w="92"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="skill-cat">
+        <div class="skill-cat-icon">🗄️</div>
+        <h3>Database</h3>
+        <div class="skill-bars">
+          <div class="skill-bar-item">
+            <div class="sb-top"><span>MySQL</span><span>88%</span></div>
+            <div class="sb-track"><div class="sb-fill" data-w="88"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="sb-top"><span>PostgreSQL</span><span>75%</span></div>
+            <div class="sb-track"><div class="sb-fill" data-w="75"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="sb-top"><span>Query Optimization</span><span>82%</span></div>
+            <div class="sb-track"><div class="sb-fill" data-w="82"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="skill-cat">
+        <div class="skill-cat-icon">🤖</div>
+        <h3>Bot & AI</h3>
+        <div class="skill-bars">
+          <div class="skill-bar-item">
+            <div class="sb-top"><span>WhatsApp Bot (AI)</span><span>85%</span></div>
+            <div class="sb-track"><div class="sb-fill" data-w="85"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="sb-top"><span>Discord Bot</span><span>82%</span></div>
+            <div class="sb-track"><div class="sb-fill" data-w="82"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="sb-top"><span>API Integration</span><span>88%</span></div>
+            <div class="sb-track"><div class="sb-fill" data-w="88"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="skill-cat">
+        <div class="skill-cat-icon">🌐</div>
+        <h3>Frontend & Tools</h3>
+        <div class="skill-bars">
+          <div class="skill-bar-item">
+            <div class="sb-top"><span>HTML/CSS</span><span>85%</span></div>
+            <div class="sb-track"><div class="sb-fill" data-w="85"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="sb-top"><span>JavaScript</span><span>82%</span></div>
+            <div class="sb-track"><div class="sb-fill" data-w="82"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="sb-top"><span>Git / GitHub</span><span>78%</span></div>
+            <div class="sb-track"><div class="sb-fill" data-w="78"></div></div>
+          </div>
+          <div class="skill-bar-item">
+            <div class="sb-top"><span>Python</span><span>70%</span></div>
+            <div class="sb-track"><div class="sb-fill" data-w="70"></div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===========================
+     PROJECTS
+=========================== -->
+<section class="section" id="projects">
+  <div class="wrap">
+    <div class="sec-label">My Work</div>
+    <h2 class="sec-title">Featured<br><span>Projects</span></h2>
+
+    <div class="projects-grid">
+
+      <div class="proj-card featured">
+        <div class="proj-glow"></div>
+        <div class="proj-top">
+          <span class="proj-tag">AI · Automation</span>
+          <span class="proj-year">2024</span>
+        </div>
+        <h3>AI WhatsApp Bot</h3>
+        <p>Offline AI-powered WhatsApp bot with natural language processing for automated conversation management. Deployed and actively used.</p>
+        <div class="proj-stack">
+          <span>Node.js</span><span>AI API</span><span>Automation</span>
+        </div>
+        <div class="proj-footer">
+          <span class="proj-status live">● Live</span>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-top">
+          <span class="proj-tag">Bot · Discord</span>
+          <span class="proj-year">2024</span>
+        </div>
+        <h3>Discord Bot</h3>
+        <p>Feature-rich Discord bot with moderation, server management, custom commands, and modular architecture for easy feature expansion.</p>
+        <div class="proj-stack">
+          <span>Node.js</span><span>Discord API</span><span>JavaScript</span>
+        </div>
+        <div class="proj-footer">
+          <span class="proj-status live">● Live</span>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-top">
+          <span class="proj-tag">Web App · Freelance</span>
+          <span class="proj-year">2023</span>
+        </div>
+        <h3>Financial Bookkeeping App</h3>
+        <p>Web-based accounting system with CRUD, user authentication, and auto-generated financial reports. Helped client move from manual to digital.</p>
+        <div class="proj-stack">
+          <span>PHP</span><span>MySQL</span><span>Bootstrap</span>
+        </div>
+        <div class="proj-footer">
+          <span class="proj-status">● Delivered</span>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-top">
+          <span class="proj-tag">Backend · BPS</span>
+          <span class="proj-year">2025</span>
+        </div>
+        <h3>Internal REST API System</h3>
+        <p>Built and maintained production REST APIs for BPS Pelalawan's internal applications using Node.js and PHP with MySQL database management.</p>
+        <div class="proj-stack">
+          <span>Node.js</span><span>PHP</span><span>MySQL</span>
+        </div>
+        <div class="proj-footer">
+          <span class="proj-status">● Production</span>
+        </div>
+      </div>
+
+      <div class="proj-card">
+        <div class="proj-top">
+          <span class="proj-tag">Data Science · Academic</span>
+          <span class="proj-year">2023</span>
+        </div>
+        <h3>K-Means Clustering Analysis</h3>
+        <p>Data clustering implementation using K-Means algorithm in Python. Processed and visualized datasets to produce actionable insights.</p>
+        <div class="proj-stack">
+          <span>Python</span><span>K-Means</span><span>Data Analysis</span>
+        </div>
+        <div class="proj-footer">
+          <span class="proj-status">● Completed</span>
+        </div>
+      </div>
+
+      <!-- LANDING PAGES SHOWCASE CARD (full-width) -->
+      <div class="proj-card lp-showcase-card">
+        <div class="proj-top">
+          <span class="proj-tag">Frontend · Freelance Clients</span>
+          <span class="proj-year">2022–Now</span>
+        </div>
+        <h3>Landing Pages Collection</h3>
+        <p>Modern, responsive landing pages built for various clients — fashion, flower shops, automotive, cafes, travel, laundry, and UMKM businesses.</p>
+        <div class="lp-grid">
+          <a href="https://fadlievan.github.io/fashiondistro/" target="_blank" class="lp-thumb" title="Fashion Distro">
+            <div class="lp-preview">
+              <iframe src="https://fadlievan.github.io/fashiondistro/" loading="lazy" scrolling="no" tabindex="-1"></iframe>
+            </div>
+            <div class="lp-label">Fashion Distro</div>
+          </a>
+          <a href="https://fadlievan.github.io/tokobunga/" target="_blank" class="lp-thumb" title="Toko Bunga">
+            <div class="lp-preview">
+              <iframe src="https://fadlievan.github.io/tokobunga/" loading="lazy" scrolling="no" tabindex="-1"></iframe>
+            </div>
+            <div class="lp-label">Toko Bunga</div>
+          </a>
+          <a href="https://fadlievan.github.io/automotive/" target="_blank" class="lp-thumb" title="Automotive">
+            <div class="lp-preview">
+              <iframe src="https://fadlievan.github.io/automotive/" loading="lazy" scrolling="no" tabindex="-1"></iframe>
+            </div>
+            <div class="lp-label">Automotive</div>
+          </a>
+          <a href="https://fadlievan.github.io/coffeshop1/" target="_blank" class="lp-thumb" title="Coffee Shop">
+            <div class="lp-preview">
+              <iframe src="https://fadlievan.github.io/coffeshop1/" loading="lazy" scrolling="no" tabindex="-1"></iframe>
+            </div>
+            <div class="lp-label">Coffee Shop</div>
+          </a>
+          <a href="https://fadlievan.github.io/travelbali/" target="_blank" class="lp-thumb" title="Travel Bali">
+            <div class="lp-preview">
+              <iframe src="https://fadlievan.github.io/travelbali/" loading="lazy" scrolling="no" tabindex="-1"></iframe>
+            </div>
+            <div class="lp-label">Travel Bali</div>
+          </a>
+          <a href="https://fadlievan.github.io/cuwam/" target="_blank" class="lp-thumb" title="Cuwam">
+            <div class="lp-preview">
+              <iframe src="https://fadlievan.github.io/cuwam/" loading="lazy" scrolling="no" tabindex="-1"></iframe>
+            </div>
+            <div class="lp-label">Cuwam</div>
+          </a>
+          <a href="https://fadlievan.github.io/weblaundry/" target="_blank" class="lp-thumb" title="Web Laundry">
+            <div class="lp-preview">
+              <iframe src="https://fadlievan.github.io/weblaundry/" loading="lazy" scrolling="no" tabindex="-1"></iframe>
+            </div>
+            <div class="lp-label">Web Laundry</div>
+          </a>
+          <a href="https://fadlievan.github.io/templateumkmweb/" target="_blank" class="lp-thumb" title="UMKM Web">
+            <div class="lp-preview">
+              <iframe src="https://fadlievan.github.io/templateumkmweb/" loading="lazy" scrolling="no" tabindex="-1"></iframe>
+            </div>
+            <div class="lp-label">UMKM Template</div>
+          </a>
+          <a href="https://fadlievan.github.io/weblionora/" target="_blank" class="lp-thumb" title="Web Lionora">
+            <div class="lp-preview">
+              <iframe src="https://fadlievan.github.io/weblionora/" loading="lazy" scrolling="no" tabindex="-1"></iframe>
+            </div>
+            <div class="lp-label">Web Lionora</div>
+          </a>
+        </div>
+        <div class="proj-stack" style="margin-top:20px">
+          <span>HTML</span><span>CSS</span><span>JavaScript</span><span>Responsive</span>
+        </div>
+        <div class="proj-footer">
+          <span class="proj-status live">● Ongoing · 9 Sites</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===========================
+     TESTIMONIALS
+=========================== -->
+<section class="section" id="testimonials">
+  <div class="wrap">
+    <div class="sec-label">What People Say</div>
+    <h2 class="sec-title">Testimonials<br><span>& Reviews</span></h2>
+
+    <div class="testi-grid">
+
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p>"Fadli delivered our internal API system on time with clean, well-structured code. The database design was solid and queries were optimized. Highly recommended."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">BK</div>
+          <div>
+            <strong>BPS Team Lead</strong>
+            <span>BPS Kabupaten Pelalawan</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p>"The bookkeeping web app he built transformed how we track finances. Simple UI, reliable system, and he was very responsive throughout the project."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">CL</div>
+          <div>
+            <strong>Business Owner</strong>
+            <span>Freelance Client</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <p>"The Discord bot he built for our server is packed with features and runs flawlessly. He understood exactly what we needed and delivered beyond expectations."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">DS</div>
+          <div>
+            <strong>Community Admin</strong>
+            <span>Discord Community</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===========================
+     CONTACT
+=========================== -->
+<section class="section contact-section" id="contact">
+  <div class="wrap">
+    <div class="sec-label">Get In Touch</div>
+    <h2 class="sec-title">Let's Build<br><span>Something Great</span></h2>
+
+    <div class="contact-grid">
+      <div class="contact-info">
+        <p>Open for full-time roles, freelance projects, and collaborations. Based in Padang, West Sumatra — willing to relocate to Jakarta or work remotely.</p>
+
+        <div class="contact-items">
+          <div class="ci">
+            <span class="ci-icon">✉️</span>
+            <div>
+              <span class="ci-label">Email</span>
+              <a href="mailto:fadliyurisman@gmail.com">fadliyurisman@gmail.com</a>
+            </div>
+          </div>
+          <div class="ci">
+            <span class="ci-icon">📱</span>
+            <div>
+              <span class="ci-label">Phone / WhatsApp</span>
+              <a href="https://wa.me/6282280034389">+62 822 8003 4389</a>
+            </div>
+          </div>
+          <div class="ci">
+            <span class="ci-icon">📍</span>
+            <div>
+              <span class="ci-label">Location</span>
+              <span>Padang, West Sumatra</span>
+            </div>
+          </div>
+        </div>
+        <div class="ci">
+          <span class="ci-icon">💼</span>
+            <div>
+            <span class="ci-label">LinkedIn</span>
+            <a href="https://www.linkedin.com/in/fadli-yurisman-487975355" target="_blank">Fadli Yurisman</a>
+          </div>
+        </div>
+
+        <div class="contact-socials">
+          <a href="mailto:fadliyurisman@gmail.com" class="soc-btn">Email Me</a>
+          <a href="https://www.linkedin.com/in/fadli-yurisman-487975355" target="_blank" class="soc-btn soc-li">LinkedIn</a>
+        </div>
+      </div>
+
+      <div class="contact-form-wrap">
+        <div class="contact-form">
+          <div class="cf-group">
+            <input type="text" placeholder="Your Name" class="cf-input" id="cf-name">
+          </div>
+          <div class="cf-group">
+            <input type="email" placeholder="Your Email" class="cf-input" id="cf-email">
+          </div>
+          <div class="cf-group">
+            <input type="text" placeholder="Subject" class="cf-input" id="cf-subject">
+          </div>
+          <div class="cf-group">
+            <textarea placeholder="Your Message" class="cf-input cf-textarea" id="cf-msg" rows="5"></textarea>
+          </div>
+          <button class="btn-main full" id="cf-send">Send Message 🚀</button>
+          <p class="cf-note" id="cf-note"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div class="footer-logo">FY<span>.</span></div>
+    <p>© 2026 Fadli Yurisman — Backend Developer & Bot Creator</p>
+    <div class="footer-links">
+      <a href="#hero">Home</a>
+      <a href="#about">About</a>
+      <a href="#projects">Work</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
