@@ -65,53 +65,54 @@ export default function Projects() {
   return (
     <section id="projects" className="relative py-28 sm:py-32 scroll-mt-24 border-t border-[var(--border-subtle)] overflow-hidden">
       <div className="mx-auto max-w-6xl px-6 relative">
-        {/* Section Index Header */}
+        {/* Section Header */}
         <div className="flex items-center gap-3 mb-16">
           <span className="font-mono-code text-xs text-[var(--text-muted)] uppercase tracking-[0.25em]">
-            {"// 02. Selected Works"}
+            {"// 03. Selected Works"}
           </span>
           <span className="h-px flex-1 bg-gradient-to-r from-[var(--border-subtle)] to-transparent" />
         </div>
 
-        {/* Section Editorial Header */}
+        {/* Editorial Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
           <div>
             <h2 className="text-3xl sm:text-5xl font-semibold tracking-tight text-[var(--text-primary)] leading-tight">
-              Featured Systems &amp; Code
+              Spatial Project Showcase
             </h2>
             <p className="mt-4 max-w-xl text-base text-[var(--text-secondary)] font-normal leading-relaxed">
-              Architectural backends, verified production REST APIs, automation pipelines, and data intelligence algorithms.
+              Architectural backends, verified production REST APIs, automation pipelines, and machine learning models crafted with precision.
             </p>
           </div>
 
           <div className="font-mono-code text-xs text-[var(--text-muted)] flex items-center gap-2">
             <span className="h-2 w-2 rounded-full bg-indigo-500 inline-block" />
-            <span>4 Verified Engineering Projects</span>
+            <span>4 Key Engineering Systems</span>
           </div>
         </div>
 
-        {/* 1. HERO FEATURED PROJECT (Bento Lead) */}
+        {/* 1. DOMINANT LEAD FEATURED PROJECT (SPATIAL HERO CARD) */}
         {heroProject && (
           <motion.div
             initial={{ opacity: 0, y: 25 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-80px" }}
             transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="rounded-3xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-8 md:p-12 shadow-lg shadow-black/[0.02] dark:shadow-black/60 transition-all duration-300 hover:border-[var(--border-strong)]"
+            data-cursor="view"
+            className="group relative rounded-3xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-8 md:p-12 shadow-sm transition-all duration-300 hover:border-[var(--border-strong)] hover:shadow-lg"
           >
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-              {/* Left Details */}
+              {/* Left Column: Editorial Specs & Content */}
               <div className="lg:col-span-6 space-y-5">
                 <div className="flex items-center gap-3">
                   <span className="font-mono-code text-xs font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-500/10 px-2.5 py-0.5 rounded-md">
-                    FEATURED SPEC • 01
+                    PRIMARY ARCHITECTURE • 01
                   </span>
                   <span className="text-xs font-mono-code uppercase tracking-wider text-[var(--text-muted)]">
                     {heroProject.category}
                   </span>
                 </div>
 
-                <h3 className="text-2xl sm:text-4xl font-bold tracking-tight text-[var(--text-primary)]">
+                <h3 className="text-2xl sm:text-4xl font-bold tracking-tight text-[var(--text-primary)] group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
                   {heroProject.title}
                 </h3>
 
@@ -137,7 +138,7 @@ export default function Projects() {
                   {heroProject.stack.map((item) => (
                     <span
                       key={item}
-                      className="rounded-full border border-[var(--border-subtle)] bg-[var(--bg-surface-subtle)] px-3 py-1 font-mono-code text-xs text-[var(--text-secondary)]"
+                      className="rounded-full border border-[var(--border-subtle)] bg-[var(--bg-surface-subtle)] px-3 py-1 font-mono-code text-xs text-[var(--text-secondary)] group-hover:border-[var(--border-strong)] transition-colors"
                     >
                       {item}
                     </span>
@@ -145,9 +146,9 @@ export default function Projects() {
                 </div>
               </div>
 
-              {/* Right Code / Architecture Spec Box */}
+              {/* Right Column: Spatial Code Spec Window */}
               <div className="lg:col-span-6">
-                <div className="rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-canvas)] p-5 shadow-inner">
+                <div className="rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-canvas)] p-5 shadow-inner transition-transform duration-300 group-hover:scale-[1.01]">
                   <div className="flex items-center justify-between pb-3 mb-3 border-b border-[var(--border-subtle)] font-mono-code text-[11px] text-[var(--text-muted)]">
                     <div className="flex items-center gap-2">
                       <span className="h-2 w-2 rounded-full bg-emerald-500" />
@@ -163,9 +164,9 @@ export default function Projects() {
                   </pre>
 
                   <div className="mt-4 pt-3 border-t border-[var(--border-subtle)] flex items-center justify-between font-mono-code text-[10px] text-[var(--text-muted)]">
-                    <span>Relational MySQL Backend</span>
+                    <span>Relational MySQL Engine</span>
                     <span className="text-emerald-600 dark:text-emerald-400 font-medium">
-                      Production Tested
+                      ● Production Verified
                     </span>
                   </div>
                 </div>
@@ -174,7 +175,7 @@ export default function Projects() {
           </motion.div>
         )}
 
-        {/* 2. SECONDARY BENTO GRID (Projects 02, 03, 04) */}
+        {/* 2. SECONDARY ASYMMETRICAL SPATIAL GRID (Projects 02, 03, 04) */}
         <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {bentoProjects.map((project, idx) => {
             const Icon = projectIcons[project.id as keyof typeof projectIcons] || Terminal;
@@ -187,13 +188,14 @@ export default function Projects() {
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-60px" }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
+                transition={{ duration: 0.5, delay: idx * 0.08 }}
+                data-cursor="view"
                 className="group relative flex flex-col justify-between rounded-3xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-7 shadow-sm transition-all duration-300 hover:border-[var(--border-strong)] hover:shadow-md"
               >
                 <div>
                   <div className="flex items-center justify-between pb-4 border-b border-[var(--border-subtle)] font-mono-code text-xs text-[var(--text-muted)]">
                     <div className="flex items-center gap-2">
-                      <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[var(--bg-surface-elevated)] text-[var(--text-secondary)]">
+                      <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[var(--bg-surface-elevated)] text-[var(--text-secondary)] group-hover:text-[var(--text-primary)] transition-colors">
                         <Icon size={14} />
                       </span>
                       <span className="font-semibold text-[var(--text-secondary)]">
@@ -215,7 +217,7 @@ export default function Projects() {
                     {project.category}
                   </p>
 
-                  <h3 className="mt-2 text-xl font-bold tracking-tight text-[var(--text-primary)]">
+                  <h3 className="mt-2 text-xl font-bold tracking-tight text-[var(--text-primary)] group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
                     {project.title}
                   </h3>
 
@@ -264,7 +266,7 @@ export default function Projects() {
           })}
         </div>
 
-        {/* 3. ADDITIONAL DEPLOYMENTS & WEB EXPERIENCES */}
+        {/* 3. ADDITIONAL CLIENT DEPLOYMENTS & LIVE WEB CATALOG */}
         <div className="mt-24 pt-12 border-t border-[var(--border-subtle)]">
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
             <div>
@@ -287,6 +289,7 @@ export default function Projects() {
                 href={item.url}
                 target="_blank"
                 rel="noopener noreferrer"
+                data-cursor="open"
                 className="group flex flex-col sm:flex-row sm:items-center justify-between py-5 px-3 -mx-3 rounded-xl transition-all duration-200 hover:bg-[var(--bg-surface-subtle)]"
               >
                 <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6">

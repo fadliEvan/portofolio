@@ -7,8 +7,9 @@ import { portfolio } from "@/data/portofolio";
 import { useTheme } from "./ThemeProvider";
 
 const navLinks = [
-  { name: "About", href: "#about" },
+  { name: "Methodology", href: "#methodology" },
   { name: "Projects", href: "#projects" },
+  { name: "About", href: "#about" },
   { name: "Skills", href: "#stack" },
   { name: "Experience", href: "#experience" },
   { name: "Contact", href: "#contact" },
@@ -25,7 +26,7 @@ export default function Navbar() {
       setScrolled(window.scrollY > 30);
 
       // Scrollspy
-      const sections = ["about", "projects", "stack", "experience", "contact"];
+      const sections = ["methodology", "projects", "about", "stack", "experience", "contact"];
       const scrollPos = window.scrollY + 200;
 
       for (const section of sections) {

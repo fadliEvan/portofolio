@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
+import SpatialFeature from "@/components/SpatialFeature";
 import Projects from "@/components/Projects";
 import About from "@/components/About";
 import Stack from "@/components/Stack";
@@ -15,6 +16,7 @@ export default function Home() {
       <Navbar />
       <main className="relative z-10 flex flex-col">
         <Hero />
+        <SpatialFeature />
         <Projects />
         <About />
         <Stack />

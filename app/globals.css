@@ -23,6 +23,7 @@
     --nav-bg: rgba(250, 248, 245, 0.82);
     --selection-bg: #121215;
     --selection-fg: #ffffff;
+    --spatial-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.07);
   }
 
   .dark {
@@ -42,6 +43,7 @@
     --nav-bg: rgba(9, 9, 11, 0.82);
     --selection-bg: #f4f4f6;
     --selection-fg: #09090b;
+    --spatial-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
   }
 }
 
@@ -98,7 +100,28 @@ body::before {
   background: var(--text-muted);
 }
 
-/* Glass & editorial utilities */
+/* 3D and Spatial Transform Utilities */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.perspective-1200 {
+  perspective: 1200px;
+}
+
+.perspective-2000 {
+  perspective: 2000px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+/* Spatial surface & editorial cards */
 .editorial-card {
   background-color: var(--bg-surface);
   border: 1px solid var(--border-subtle);
@@ -106,6 +129,19 @@ body::before {
 }
 
 .editorial-card:hover {
+  border-color: var(--border-strong);
+}
+
+.spatial-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  box-shadow: var(--spatial-shadow);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.25s ease,
+              box-shadow 0.35s ease;
+}
+
+.spatial-card:hover {
   border-color: var(--border-strong);
 }
 

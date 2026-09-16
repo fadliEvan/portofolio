@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Server, Database, BrainCircuit, GraduationCap, CheckCircle2 } from "lucide-react";
+import { Server, Database, BrainCircuit, GraduationCap, CheckCircle2, ShieldCheck } from "lucide-react";
 
 const focusAreas = [
   {
@@ -34,6 +34,14 @@ const highlights = [
 export default function About() {
   return (
     <section id="about" className="relative py-28 sm:py-32 scroll-mt-24 border-t border-[var(--border-subtle)] overflow-hidden">
+      {/* Subtle Layered Architectural Background Typography */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-10 right-0 font-mono-code text-[140px] font-black tracking-tighter text-[var(--border-subtle)] opacity-40 select-none hidden lg:block"
+      >
+        01/BIO
+      </div>
+
       <div className="mx-auto max-w-6xl px-6 relative">
         {/* Section Header */}
         <div className="flex items-center gap-3 mb-16">
@@ -47,15 +55,21 @@ export default function About() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           {/* Left Column: Big Statement & Narrative */}
           <div className="lg:col-span-7">
-            <motion.h2
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
-              className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[var(--text-primary)] leading-[1.12]"
             >
-              Engineering reliable backend foundations for real-world operations.
-            </motion.h2>
+              <div className="inline-flex items-center gap-1.5 font-mono-code text-xs text-indigo-600 dark:text-indigo-400 font-semibold mb-4">
+                <ShieldCheck size={14} />
+                <span>BACKEND ENGINEERING FOCUS</span>
+              </div>
+
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-[var(--text-primary)] leading-[1.12]">
+                Engineering reliable backend foundations for real-world operations.
+              </h2>
+            </motion.div>
 
             <motion.div
               initial={{ opacity: 0, y: 20 }}

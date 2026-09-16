@@ -27,8 +27,8 @@ export default function Footer() {
           </div>
 
           <div className="flex flex-wrap items-center gap-6 text-xs text-[var(--text-secondary)]">
-            <a href="#about" className="hover:text-[var(--text-primary)] transition-colors">
-              About
+            <a href="#methodology" className="hover:text-[var(--text-primary)] transition-colors">
+              Methodology
             </a>
             <a href="#projects" className="hover:text-[var(--text-primary)] transition-colors">
               Projects
