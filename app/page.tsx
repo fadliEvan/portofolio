@@ -1,24 +1,24 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import About from "@/components/About";
-import Experience from "@/components/Experience";
 import Projects from "@/components/Projects";
+import About from "@/components/About";
 import Stack from "@/components/Stack";
+import Experience from "@/components/Experience";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
-import AmbientGlow from "@/components/AmbientGlow";
+import SpotlightCursor from "@/components/SpotlightCursor";
 
 export default function Home() {
   return (
-    <div className="relative min-h-screen bg-[#08080a] text-zinc-100 selection:bg-white selection:text-black">
-      <AmbientGlow />
+    <div className="relative min-h-screen bg-[var(--bg-canvas)] text-[var(--text-primary)]">
+      <SpotlightCursor />
       <Navbar />
       <main className="relative z-10 flex flex-col">
         <Hero />
-        <About />
-        <Experience />
         <Projects />
+        <About />
         <Stack />
+        <Experience />
         <Contact />
       </main>
       <Footer />

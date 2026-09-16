@@ -1,7 +1,17 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowUpRight, Terminal, Bot, Database, BarChart3, ExternalLink } from "lucide-react";
+import {
+  ArrowUpRight,
+  Terminal,
+  Bot,
+  Database,
+  BarChart3,
+  ExternalLink,
+  Code2,
+  CheckCircle,
+} from "lucide-react";
 import { featuredProjects, clientProjects } from "@/data/projects";
 
 const projectIcons = {
@@ -11,163 +21,242 @@ const projectIcons = {
   "04": BarChart3,
 };
 
-const projectCodes = {
-  "01": `// REST API Controller
+const projectCodeSnippets: Record<string, string> = {
+  "01": `// REST API Controller - BPS Pelalawan Internal Service
 router.get("/v1/analytics/records", authGuard, async (req, res) => {
   const result = await db.query(
     "SELECT id, metrics, timestamp FROM logs ORDER BY id DESC LIMIT 50"
   );
   return res.status(200).json({ status: "success", data: result.rows });
 });`,
-  "02": `// AI WhatsApp Webhook Handler
-async function handleMessage(event) {
+  "02": `// WhatsApp Automation Webhook Dispatcher
+async function handleIncomingMessage(event) {
   const { from, text } = event.payload;
-  const aiResponse = await aiService.complete({
+  const response = await aiService.complete({
     prompt: text,
-    context: "Customer support & task orchestration"
+    systemPrompt: "Assist user with operational queries & workflow routing"
   });
-  await whatsappClient.sendText(from, aiResponse.text);
+  await whatsappClient.sendText(from, response.text);
 }`,
-  "03": `// Financial Bookkeeping Transaction
-function recordLedgerEntry($pdo, $debitAcc, $creditAcc, $amount) {
+  "03": `// Financial Bookkeeping Ledger Entry
+function recordLedgerTransaction($pdo, $debitAcc, $creditAcc, $amount) {
   $pdo->beginTransaction();
   $stmt = $pdo->prepare("INSERT INTO transactions VALUES (?, ?, ?, NOW())");
   $stmt->execute([$debitAcc, $creditAcc, $amount]);
   $pdo->commit();
 }`,
-  "04": `# K-Means Clustering Algorithm Pipeline
+  "04": `# Unsupervised K-Means Pipeline & Clustering
 kmeans = KMeans(n_clusters=4, init='k-means++', random_state=42)
 cluster_labels = kmeans.fit_predict(scaled_features)
-silhouette = silhouette_score(scaled_features, cluster_labels)
-print(f"Optimal Silhouette Score: {silhouette:.4f}")`,
+score = silhouette_score(scaled_features, cluster_labels)
+print(f"Optimal Silhouette Score: {score:.4f}")`,
 };
 
 export default function Projects() {
+  const [activeCodeTab, setActiveCodeTab] = useState<Record<string, boolean>>({});
+
+  const toggleCodeView = (id: string) => {
+    setActiveCodeTab((prev) => ({ ...prev, [id]: !prev[id] }));
+  };
+
+  const heroProject = featuredProjects[0];
+  const bentoProjects = featuredProjects.slice(1);
+
   return (
-    <section id="projects" className="relative py-28 sm:py-32 scroll-mt-24 border-t border-white/5 overflow-hidden">
+    <section id="projects" className="relative py-28 sm:py-32 scroll-mt-24 border-t border-[var(--border-subtle)] overflow-hidden">
       <div className="mx-auto max-w-6xl px-6 relative">
-        {/* Section Header */}
+        {/* Section Index Header */}
         <div className="flex items-center gap-3 mb-16">
-          <span className="font-mono-code text-xs text-zinc-500 uppercase tracking-[0.25em]">
-            {"// 03. Selected Works"}
+          <span className="font-mono-code text-xs text-[var(--text-muted)] uppercase tracking-[0.25em]">
+            {"// 02. Selected Works"}
           </span>
-          <span className="h-px flex-1 bg-gradient-to-r from-white/10 via-white/5 to-transparent" />
+          <span className="h-px flex-1 bg-gradient-to-r from-[var(--border-subtle)] to-transparent" />
         </div>
 
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-20">
+        {/* Section Editorial Header */}
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
           <div>
-            <h2 className="text-3xl sm:text-5xl font-semibold tracking-tight text-white leading-tight">
+            <h2 className="text-3xl sm:text-5xl font-semibold tracking-tight text-[var(--text-primary)] leading-tight">
               Featured Systems &amp; Code
             </h2>
-            <p className="mt-4 max-w-xl text-base text-zinc-400 font-light leading-relaxed">
-              Architectural solutions, production REST APIs, automation pipelines, and machine learning models crafted with precision.
+            <p className="mt-4 max-w-xl text-base text-[var(--text-secondary)] font-normal leading-relaxed">
+              Architectural backends, verified production REST APIs, automation pipelines, and data intelligence algorithms.
             </p>
           </div>
 
-          <div className="font-mono-code text-xs text-zinc-500 flex items-center gap-2">
-            <span className="h-2 w-2 rounded-full bg-indigo-500 inline-block animate-pulse" />
-            <span>4 Key Backend Projects</span>
+          <div className="font-mono-code text-xs text-[var(--text-muted)] flex items-center gap-2">
+            <span className="h-2 w-2 rounded-full bg-indigo-500 inline-block" />
+            <span>4 Verified Engineering Projects</span>
           </div>
         </div>
 
-        {/* Featured Projects Grid / Editorial Showcase */}
-        <div className="space-y-12">
-          {featuredProjects.map((project, idx) => {
+        {/* 1. HERO FEATURED PROJECT (Bento Lead) */}
+        {heroProject && (
+          <motion.div
+            initial={{ opacity: 0, y: 25 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="rounded-3xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-8 md:p-12 shadow-lg shadow-black/[0.02] dark:shadow-black/60 transition-all duration-300 hover:border-[var(--border-strong)]"
+          >
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+              {/* Left Details */}
+              <div className="lg:col-span-6 space-y-5">
+                <div className="flex items-center gap-3">
+                  <span className="font-mono-code text-xs font-bold text-indigo-600 dark:text-indigo-400 bg-indigo-500/10 px-2.5 py-0.5 rounded-md">
+                    FEATURED SPEC • 01
+                  </span>
+                  <span className="text-xs font-mono-code uppercase tracking-wider text-[var(--text-muted)]">
+                    {heroProject.category}
+                  </span>
+                </div>
+
+                <h3 className="text-2xl sm:text-4xl font-bold tracking-tight text-[var(--text-primary)]">
+                  {heroProject.title}
+                </h3>
+
+                <p className="text-sm sm:text-base text-[var(--text-secondary)] font-normal leading-relaxed">
+                  {heroProject.description}
+                </p>
+
+                {heroProject.details && (
+                  <p className="text-xs sm:text-sm text-[var(--text-muted)] font-normal leading-relaxed">
+                    {heroProject.details}
+                  </p>
+                )}
+
+                {heroProject.metrics && (
+                  <div className="inline-flex items-center gap-2 rounded-lg border border-[var(--border-subtle)] bg-[var(--bg-surface-elevated)] px-3.5 py-1.5 text-xs text-[var(--text-secondary)] font-mono-code">
+                    <CheckCircle size={13} className="text-emerald-500" />
+                    <span>{heroProject.metrics}</span>
+                  </div>
+                )}
+
+                {/* Stack Badges */}
+                <div className="pt-2 flex flex-wrap gap-2">
+                  {heroProject.stack.map((item) => (
+                    <span
+                      key={item}
+                      className="rounded-full border border-[var(--border-subtle)] bg-[var(--bg-surface-subtle)] px-3 py-1 font-mono-code text-xs text-[var(--text-secondary)]"
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Right Code / Architecture Spec Box */}
+              <div className="lg:col-span-6">
+                <div className="rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-canvas)] p-5 shadow-inner">
+                  <div className="flex items-center justify-between pb-3 mb-3 border-b border-[var(--border-subtle)] font-mono-code text-[11px] text-[var(--text-muted)]">
+                    <div className="flex items-center gap-2">
+                      <span className="h-2 w-2 rounded-full bg-emerald-500" />
+                      <span className="text-[var(--text-secondary)] font-medium">
+                        api-controller.internal.ts
+                      </span>
+                    </div>
+                    <span>Node.js / Express</span>
+                  </div>
+
+                  <pre className="font-mono-code text-xs text-[var(--text-secondary)] overflow-x-auto leading-relaxed p-1">
+                    <code>{projectCodeSnippets["01"]}</code>
+                  </pre>
+
+                  <div className="mt-4 pt-3 border-t border-[var(--border-subtle)] flex items-center justify-between font-mono-code text-[10px] text-[var(--text-muted)]">
+                    <span>Relational MySQL Backend</span>
+                    <span className="text-emerald-600 dark:text-emerald-400 font-medium">
+                      Production Tested
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
+
+        {/* 2. SECONDARY BENTO GRID (Projects 02, 03, 04) */}
+        <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {bentoProjects.map((project, idx) => {
             const Icon = projectIcons[project.id as keyof typeof projectIcons] || Terminal;
-            const codeSample = projectCodes[project.id as keyof typeof projectCodes];
-            const isReversed = idx % 2 === 1;
+            const isCodeOpen = activeCodeTab[project.id];
+            const snippet = projectCodeSnippets[project.id];
 
             return (
               <motion.article
                 key={project.id}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                className="group relative rounded-3xl border border-white/10 bg-zinc-950/70 backdrop-blur-xl p-8 md:p-12 transition-all duration-500 hover:border-white/20 hover:shadow-2xl hover:shadow-indigo-500/5"
+                viewport={{ once: true, margin: "-60px" }}
+                transition={{ duration: 0.5, delay: idx * 0.1 }}
+                className="group relative flex flex-col justify-between rounded-3xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-7 shadow-sm transition-all duration-300 hover:border-[var(--border-strong)] hover:shadow-md"
               >
-                <div
-                  className={`grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center ${
-                    isReversed ? "lg:flex-row-reverse" : ""
-                  }`}
-                >
-                  {/* Info Column */}
-                  <div className={`lg:col-span-6 ${isReversed ? "lg:order-2" : "lg:order-1"}`}>
-                    <div className="flex items-center gap-3">
-                      <span className="font-mono-code text-sm font-semibold text-zinc-500">
+                <div>
+                  <div className="flex items-center justify-between pb-4 border-b border-[var(--border-subtle)] font-mono-code text-xs text-[var(--text-muted)]">
+                    <div className="flex items-center gap-2">
+                      <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-[var(--bg-surface-elevated)] text-[var(--text-secondary)]">
+                        <Icon size={14} />
+                      </span>
+                      <span className="font-semibold text-[var(--text-secondary)]">
                         /{project.id}
                       </span>
-                      <span className="h-3 w-px bg-white/10" />
-                      <span className="text-xs font-mono-code uppercase tracking-wider text-zinc-400">
-                        {project.category}
-                      </span>
                     </div>
 
-                    <h3 className="mt-4 text-2xl sm:text-3xl font-semibold text-white tracking-tight group-hover:text-zinc-100 transition-colors">
-                      {project.title}
-                    </h3>
-
-                    <p className="mt-4 text-sm sm:text-base text-zinc-400 font-light leading-relaxed">
-                      {project.description}
-                    </p>
-
-                    {project.details && (
-                      <p className="mt-3 text-xs sm:text-sm text-zinc-500 font-light leading-relaxed">
-                        {project.details}
-                      </p>
-                    )}
-
-                    {/* Metrics / Key result badge */}
-                    {project.metrics && (
-                      <div className="mt-6 inline-flex items-center gap-2 rounded-lg border border-white/5 bg-white/[0.02] px-3.5 py-1.5 text-xs text-zinc-300 font-mono-code">
-                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                        <span>{project.metrics}</span>
-                      </div>
-                    )}
-
-                    {/* Tech stack badges */}
-                    <div className="mt-8 flex flex-wrap gap-2">
-                      {project.stack.map((t) => (
-                        <span
-                          key={t}
-                          className="rounded-full border border-white/10 bg-white/5 px-3 py-1 font-mono-code text-xs text-zinc-300 transition-colors group-hover:border-white/20"
-                        >
-                          {t}
-                        </span>
-                      ))}
-                    </div>
+                    <button
+                      onClick={() => toggleCodeView(project.id)}
+                      className="flex items-center gap-1 text-[11px] text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors px-2 py-1 rounded bg-[var(--bg-surface-subtle)]"
+                      title="Inspect code"
+                    >
+                      <Code2 size={12} />
+                      <span>{isCodeOpen ? "Overview" : "Inspect Code"}</span>
+                    </button>
                   </div>
 
-                  {/* Visual / Code Schema Preview Frame */}
-                  <div className={`lg:col-span-6 ${isReversed ? "lg:order-1" : "lg:order-2"}`}>
-                    <div className="relative rounded-2xl border border-white/10 bg-[#0c0c0e] p-5 shadow-2xl transition-all duration-300 group-hover:border-white/25">
-                      {/* Window Header */}
-                      <div className="flex items-center justify-between pb-3 mb-3 border-b border-white/5 font-mono-code text-[11px] text-zinc-500">
-                        <div className="flex items-center gap-2">
-                          <span className="h-2.5 w-2.5 rounded-full bg-zinc-700 group-hover:bg-red-500/80 transition-colors" />
-                          <span className="h-2.5 w-2.5 rounded-full bg-zinc-700 group-hover:bg-amber-500/80 transition-colors" />
-                          <span className="h-2.5 w-2.5 rounded-full bg-zinc-700 group-hover:bg-emerald-500/80 transition-colors" />
-                          <span className="ml-2 text-zinc-400 font-medium">
-                            {project.title.toLowerCase().replace(/\s+/g, "-")}.src
-                          </span>
-                        </div>
-                        <div className="flex items-center gap-1.5 text-zinc-400">
-                          <Icon size={13} />
-                          <span className="text-[10px] uppercase">Engine</span>
-                        </div>
-                      </div>
+                  <p className="mt-5 text-[11px] font-mono-code uppercase tracking-wider text-[var(--text-muted)]">
+                    {project.category}
+                  </p>
 
-                      {/* Code Snippet Block */}
-                      <pre className="font-mono-code text-xs text-zinc-300 overflow-x-auto p-2 leading-relaxed">
-                        <code>{codeSample}</code>
+                  <h3 className="mt-2 text-xl font-bold tracking-tight text-[var(--text-primary)]">
+                    {project.title}
+                  </h3>
+
+                  {isCodeOpen ? (
+                    <div className="mt-4 rounded-xl border border-[var(--border-subtle)] bg-[var(--bg-canvas)] p-3">
+                      <pre className="font-mono-code text-[11px] text-[var(--text-secondary)] overflow-x-auto leading-relaxed">
+                        <code>{snippet}</code>
                       </pre>
-
-                      {/* Bottom status bar */}
-                      <div className="mt-4 pt-3 border-t border-white/5 flex items-center justify-between font-mono-code text-[10px] text-zinc-500">
-                        <span>UTF-8 • LF • Architecture Verified</span>
-                        <span className="text-emerald-400">● 100% Validated</span>
-                      </div>
                     </div>
+                  ) : (
+                    <>
+                      <p className="mt-3 text-sm text-[var(--text-secondary)] font-normal leading-relaxed">
+                        {project.description}
+                      </p>
+
+                      {project.details && (
+                        <p className="mt-3 text-xs text-[var(--text-muted)] font-normal leading-relaxed">
+                          {project.details}
+                        </p>
+                      )}
+                    </>
+                  )}
+                </div>
+
+                <div className="mt-6 pt-5 border-t border-[var(--border-subtle)] space-y-4">
+                  {project.metrics && (
+                    <div className="flex items-center gap-2 text-xs font-mono-code text-[var(--text-muted)]">
+                      <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                      <span className="text-[var(--text-secondary)]">{project.metrics}</span>
+                    </div>
+                  )}
+
+                  <div className="flex flex-wrap gap-1.5">
+                    {project.stack.map((t) => (
+                      <span
+                        key={t}
+                        className="rounded-md border border-[var(--border-subtle)] bg-[var(--bg-surface-subtle)] px-2 py-0.5 font-mono-code text-[11px] text-[var(--text-secondary)]"
+                      >
+                        {t}
+                      </span>
+                    ))}
                   </div>
                 </div>
               </motion.article>
@@ -175,49 +264,49 @@ export default function Projects() {
           })}
         </div>
 
-        {/* Additional Frontend & Client Deployments Showcase */}
-        <div className="mt-28">
-          <div className="flex items-center justify-between mb-8 pb-4 border-b border-white/10">
+        {/* 3. ADDITIONAL DEPLOYMENTS & WEB EXPERIENCES */}
+        <div className="mt-24 pt-12 border-t border-[var(--border-subtle)]">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
             <div>
-              <p className="font-mono-code text-xs uppercase tracking-widest text-zinc-500">
-                {"// Index"}
+              <p className="font-mono-code text-xs uppercase tracking-widest text-[var(--text-muted)]">
+                {"// Live Catalog"}
               </p>
-              <h3 className="mt-1 text-2xl font-semibold text-white tracking-tight">
+              <h3 className="mt-1 text-2xl font-bold text-[var(--text-primary)] tracking-tight">
                 Additional Deployments &amp; Web Applications
               </h3>
             </div>
-            <span className="hidden sm:inline-block font-mono-code text-xs text-zinc-500">
+            <span className="font-mono-code text-xs text-[var(--text-muted)]">
               Interactive Web Works
             </span>
           </div>
 
-          <div className="divide-y divide-white/5 border-y border-white/5">
+          <div className="divide-y divide-[var(--border-subtle)] border-y border-[var(--border-subtle)]">
             {clientProjects.map((item) => (
               <a
                 key={item.name}
                 href={item.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex flex-col sm:flex-row sm:items-center justify-between py-6 px-4 -mx-4 rounded-xl transition-all duration-300 hover:bg-white/[0.03]"
+                className="group flex flex-col sm:flex-row sm:items-center justify-between py-5 px-3 -mx-3 rounded-xl transition-all duration-200 hover:bg-[var(--bg-surface-subtle)]"
               >
                 <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6">
-                  <span className="text-lg font-medium text-white group-hover:text-indigo-300 transition-colors flex items-center gap-2">
+                  <span className="text-base font-semibold text-[var(--text-primary)] group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors flex items-center gap-1.5">
                     {item.name}
                     <ArrowUpRight
-                      size={16}
-                      className="opacity-0 -translate-y-1 translate-x-1 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all duration-300"
+                      size={15}
+                      className="opacity-0 -translate-y-0.5 translate-x-0.5 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all duration-200"
                     />
                   </span>
-                  <span className="text-xs text-zinc-500 font-mono-code">
+                  <span className="text-xs text-[var(--text-muted)] font-mono-code">
                     {item.category}
                   </span>
                 </div>
 
                 <div className="flex items-center gap-6 mt-2 sm:mt-0">
-                  <span className="text-xs font-mono-code text-zinc-400">
+                  <span className="text-xs font-mono-code text-[var(--text-secondary)]">
                     {item.stack}
                   </span>
-                  <span className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-2.5 py-1 text-[11px] font-mono-code text-zinc-300 group-hover:border-white/20 group-hover:bg-white/10 transition-colors">
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border-subtle)] bg-[var(--bg-surface-subtle)] px-2.5 py-1 text-[11px] font-mono-code text-[var(--text-secondary)] group-hover:border-[var(--border-strong)] transition-colors">
                     <ExternalLink size={11} />
                     {item.year}
                   </span>

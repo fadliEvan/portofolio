@@ -1,197 +1,262 @@
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowDownRight, Terminal, Sparkles, Database, Cpu } from "lucide-react";
+import { ArrowDownRight, Terminal, Sparkles, Database, Bot, ArrowUpRight, ShieldCheck, FileText } from "lucide-react";
 import { GithubIcon } from "@/components/Icons";
 import { portfolio } from "@/data/portofolio";
 
+const inspectorTabs = [
+  {
+    id: "api",
+    label: "REST API Spec",
+    icon: Terminal,
+    status: "200 OK • 18ms",
+    code: `// Production REST API Endpoint
+router.get("/v1/analytics/records", authGuard, async (req, res) => {
+  const result = await db.query(
+    "SELECT id, metrics, timestamp FROM operational_logs ORDER BY id DESC LIMIT 50"
+  );
+  return res.status(200).json({ status: "success", data: result.rows });
+});`,
+  },
+  {
+    id: "db",
+    label: "Schema Architecture",
+    icon: Database,
+    status: "ACID Normalized",
+    code: `-- Relational Schema & Indexing
+CREATE TABLE internal_records (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  entity_code VARCHAR(64) NOT NULL,
+  data_payload JSON NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_entity_timestamp (entity_code, created_at)
+);`,
+  },
+  {
+    id: "bot",
+    label: "AI Webhook Pipeline",
+    icon: Bot,
+    status: "Event Stream Active",
+    code: `// AI Conversation & Automation Pipeline
+async function handleIncomingWebhook(event) {
+  const { from, text } = event.payload;
+  const aiResponse = await aiService.complete({
+    prompt: text,
+    context: "Structured workflow orchestration & customer routing"
+  });
+  await whatsappClient.sendText(from, aiResponse.text);
+}`,
+  },
+];
+
 export default function Hero() {
+  const [activeTab, setActiveTab] = useState(0);
+  const currentSpec = inspectorTabs[activeTab];
+
   return (
     <section className="relative min-h-[92vh] flex flex-col justify-between pt-32 pb-16 overflow-hidden">
-      {/* Background radial spotlights & subtle glow */}
-      <div className="pointer-events-none absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] bg-gradient-to-b from-indigo-500/10 via-zinc-800/10 to-transparent blur-[120px] rounded-full" />
-      <div className="pointer-events-none absolute -top-40 right-[-10%] w-[500px] h-[500px] bg-emerald-500/[0.03] blur-[100px] rounded-full" />
-
       <div className="relative mx-auto max-w-6xl w-full px-6 flex-1 flex flex-col justify-center">
-        {/* Top meta-bar */}
+        {/* Top Eyebrow & Metadata Bar */}
         <motion.div
-          initial={{ opacity: 0, y: 15 }}
+          initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="flex flex-wrap items-center justify-between gap-4 mb-10 pb-6 border-b border-white/5"
+          transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          className="flex flex-wrap items-center justify-between gap-4 mb-8 pb-4 border-b border-[var(--border-subtle)]"
         >
-          <div className="inline-flex items-center gap-2 font-mono-code text-xs text-zinc-400">
-            <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-400" />
-            <span className="tracking-widest uppercase text-[11px] text-zinc-500">
-              Location
+          <div className="inline-flex items-center gap-2 font-mono-code text-xs text-[var(--text-secondary)]">
+            <span className="inline-block h-1.5 w-1.5 rounded-full bg-emerald-500" />
+            <span className="tracking-widest uppercase text-[10px] text-[var(--text-muted)]">
+              Base Location
             </span>
-            <span className="text-zinc-300">Indonesia (WIB / GMT+7)</span>
+            <span className="text-[var(--text-primary)] font-medium">
+              Indonesia (WIB / GMT+7)
+            </span>
           </div>
 
-          <div className="flex items-center gap-6 font-mono-code text-xs text-zinc-500">
+          <div className="flex items-center gap-6 font-mono-code text-xs text-[var(--text-muted)]">
             <span className="hidden sm:inline-flex items-center gap-1.5">
-              <Database size={13} className="text-zinc-400" />
-              REST APIs & Databases
+              <Database size={12} className="text-[var(--text-secondary)]" />
+              REST APIs &amp; Relational Databases
             </span>
             <span className="inline-flex items-center gap-1.5">
-              <Cpu size={13} className="text-zinc-400" />
-              AI Automation
+              <ShieldCheck size={12} className="text-emerald-500" />
+              Production Verified
             </span>
           </div>
         </motion.div>
 
-        {/* Main Dramatic Headline */}
-        <div className="relative">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3.5 py-1 text-xs text-zinc-300 mb-6 backdrop-blur-md">
-              <Sparkles size={12} className="text-amber-400" />
-              <span className="tracking-wide">Software & Backend Engineering</span>
-            </div>
-
-            <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-[6.2rem] font-bold tracking-tight text-white leading-[0.95]">
-              <span className="block text-zinc-500 font-light tracking-normal text-3xl sm:text-4xl md:text-5xl lg:text-5xl mb-2">
-                Hello, I&apos;m
-              </span>
-              <span className="text-gradient">Fadli Yurisman.</span>
-            </h1>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 25 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="mt-8 grid grid-cols-1 lg:grid-cols-12 gap-8 items-end"
-          >
-            <div className="lg:col-span-7">
-              <p className="text-lg md:text-xl text-zinc-400 font-light leading-relaxed max-w-2xl">
-                I architect high-performance <span className="text-white font-medium">REST APIs</span>, robust database infrastructures, and <span className="text-white font-medium">AI-driven automation systems</span> that turn complex backend logic into seamless digital experiences.
-              </p>
-
-              {/* Action Buttons */}
-              <div className="mt-8 flex flex-wrap items-center gap-4">
-                <a
-                  href="#projects"
-                  className="group relative inline-flex items-center gap-3 rounded-full bg-white px-7 py-3.5 text-sm font-semibold text-black transition-all duration-300 hover:bg-zinc-200 hover:shadow-xl hover:shadow-white/10 active:scale-95"
-                >
-                  <span>Explore Selected Work</span>
-                  <ArrowDownRight
-                    size={16}
-                    className="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:translate-y-0.5"
-                  />
-                </a>
-
-                <a
-                  href={portfolio.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.02] px-6 py-3.5 text-sm font-medium text-zinc-300 backdrop-blur-md transition-all duration-300 hover:border-white/30 hover:bg-white/[0.06] hover:text-white"
-                >
-                  <GithubIcon size={16} />
-                  <span>GitHub</span>
-                </a>
-
-                <a
-                  href="#about"
-                  className="inline-flex items-center gap-2 px-4 py-3.5 text-sm font-medium text-zinc-400 hover:text-white transition-colors"
-                >
-                  <span>Read Profile</span>
-                  <span className="font-mono-code text-xs text-zinc-600">→</span>
-                </a>
+        {/* Main Headline & Narrative */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+          {/* Left Column: Editorial Headline & Bio */}
+          <div className="lg:col-span-7 space-y-6">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <div className="inline-flex items-center gap-2 rounded-full border border-[var(--border-subtle)] bg-[var(--bg-surface-subtle)] px-3 py-1 text-xs text-[var(--text-secondary)] mb-6">
+                <Sparkles size={12} className="text-amber-500" />
+                <span className="tracking-wide">Backend &amp; Systems Developer</span>
               </div>
-            </div>
 
-            {/* Interactive / Cinematic Terminal Card */}
-            <div className="lg:col-span-5">
-              <div className="rounded-2xl border border-white/10 bg-zinc-950/70 p-5 backdrop-blur-xl shadow-2xl relative overflow-hidden group">
-                {/* Header bar */}
-                <div className="flex items-center justify-between pb-3 border-b border-white/5 font-mono-code text-[11px] text-zinc-500">
-                  <div className="flex items-center gap-2">
-                    <span className="h-2.5 w-2.5 rounded-full bg-red-500/80 inline-block" />
-                    <span className="h-2.5 w-2.5 rounded-full bg-amber-500/80 inline-block" />
-                    <span className="h-2.5 w-2.5 rounded-full bg-emerald-500/80 inline-block" />
-                    <span className="ml-2 text-zinc-400">fadli@engine:~$</span>
-                  </div>
-                  <span className="flex items-center gap-1 text-[10px] text-zinc-500">
-                    <Terminal size={12} />
-                    status: online
+              <h1 className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-[var(--text-primary)] leading-[1.03]">
+                <span className="block text-[var(--text-muted)] font-normal text-2xl sm:text-3xl md:text-4xl mb-2">
+                  Hello, I&apos;m
+                </span>
+                {portfolio.name}.
+              </h1>
+            </motion.div>
+
+            <motion.p
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+              className="text-base sm:text-lg text-[var(--text-secondary)] font-normal leading-relaxed max-w-2xl"
+            >
+              I architect high-performance <span className="text-[var(--text-primary)] font-semibold">REST APIs</span>, robust database infrastructures, and <span className="text-[var(--text-primary)] font-semibold">AI-driven automation workflows</span>. Experienced in engineering government data systems at BPS Pelalawan with an uncompromising focus on reliability, scalability, and clean code.
+            </motion.p>
+
+            {/* Action Buttons */}
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              className="pt-2 flex flex-wrap items-center gap-3"
+            >
+              <a
+                href="#projects"
+                className="group relative inline-flex items-center gap-2.5 rounded-full bg-[var(--text-primary)] px-6 py-3 text-xs font-semibold text-[var(--bg-canvas)] transition-all duration-200 hover:opacity-90 active:scale-95 shadow-sm"
+              >
+                <span>Explore Selected Work</span>
+                <ArrowDownRight
+                  size={14}
+                  className="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:translate-y-0.5"
+                />
+              </a>
+
+              <a
+                href={portfolio.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center gap-2 rounded-full border border-[var(--border-subtle)] bg-[var(--bg-surface-subtle)] px-5 py-3 text-xs font-medium text-[var(--text-secondary)] transition-all duration-200 hover:border-[var(--border-strong)] hover:text-[var(--text-primary)]"
+              >
+                <GithubIcon size={14} />
+                <span>GitHub</span>
+                <ArrowUpRight size={12} className="text-[var(--text-muted)] group-hover:text-[var(--text-primary)]" />
+              </a>
+
+              <a
+                href="/CVFadliYurisman.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group inline-flex items-center gap-2 rounded-full border border-[var(--border-subtle)] bg-[var(--bg-surface-subtle)] px-5 py-3 text-xs font-medium text-[var(--text-secondary)] transition-all duration-200 hover:border-[var(--border-strong)] hover:text-[var(--text-primary)]"
+              >
+                <FileText size={14} />
+                <span>Resume PDF</span>
+              </a>
+            </motion.div>
+          </div>
+
+          {/* Right Column: Interactive System Architecture Inspector */}
+          <div className="lg:col-span-5">
+            <motion.div
+              initial={{ opacity: 0, y: 25 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.25, ease: [0.16, 1, 0.3, 1] }}
+              className="rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-5 shadow-xl shadow-black/[0.04] dark:shadow-black/60 relative overflow-hidden"
+            >
+              {/* Window Controls & Title */}
+              <div className="flex items-center justify-between pb-3 border-b border-[var(--border-subtle)] font-mono-code text-[11px] text-[var(--text-muted)]">
+                <div className="flex items-center gap-1.5">
+                  <span className="h-2.5 w-2.5 rounded-full bg-red-400/80 inline-block" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-amber-400/80 inline-block" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-emerald-400/80 inline-block" />
+                  <span className="ml-2 font-medium text-[var(--text-secondary)]">
+                    engine.core.ts
                   </span>
                 </div>
-
-                {/* Code body */}
-                <div className="pt-4 font-mono-code text-xs space-y-2 text-zinc-300 leading-relaxed">
-                  <div className="text-zinc-500">{"// Core Engineering Identity"}</div>
-                  <div>
-                    <span className="text-indigo-400">const</span> developer = &#123;
-                  </div>
-                  <div className="pl-4">
-                    <span className="text-zinc-400">name:</span>{" "}
-                    <span className="text-emerald-300">&quot;Fadli Yurisman&quot;</span>,
-                  </div>
-                  <div className="pl-4">
-                    <span className="text-zinc-400">role:</span>{" "}
-                    <span className="text-emerald-300">&quot;Backend Engineer&quot;</span>,
-                  </div>
-                  <div className="pl-4">
-                    <span className="text-zinc-400">focus:</span> [
-                    <span className="text-amber-300">&quot;REST APIs&quot;</span>,{" "}
-                    <span className="text-amber-300">&quot;PostgreSQL&quot;</span>,{" "}
-                    <span className="text-amber-300">&quot;AI Automation&quot;</span>],
-                  </div>
-                  <div className="pl-4">
-                    <span className="text-zinc-400">openForHire:</span>{" "}
-                    <span className="text-purple-400">true</span>
-                  </div>
-                  <div>&#125;;</div>
-                </div>
-
-                {/* Subtle highlight sheen */}
-                <div className="absolute inset-0 bg-gradient-to-tr from-white/[0.02] via-transparent to-transparent pointer-events-none" />
+                <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-medium">
+                  {currentSpec.status}
+                </span>
               </div>
-            </div>
-          </motion.div>
+
+              {/* Interactive Tabs */}
+              <div className="flex items-center gap-1 pt-3 pb-2 border-b border-[var(--border-subtle)] overflow-x-auto">
+                {inspectorTabs.map((tab, idx) => {
+                  const Icon = tab.icon;
+                  const isActive = activeTab === idx;
+                  return (
+                    <button
+                      key={tab.id}
+                      onClick={() => setActiveTab(idx)}
+                      className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-mono-code transition-all duration-150 whitespace-nowrap ${
+                        isActive
+                          ? "bg-[var(--bg-surface-elevated)] text-[var(--text-primary)] font-semibold border border-[var(--border-subtle)]"
+                          : "text-[var(--text-muted)] hover:text-[var(--text-secondary)]"
+                      }`}
+                    >
+                      <Icon size={12} />
+                      <span>{tab.label}</span>
+                    </button>
+                  );
+                })}
+              </div>
+
+              {/* Code Snippet Content */}
+              <div className="pt-4 min-h-[160px]">
+                <pre className="font-mono-code text-xs text-[var(--text-secondary)] overflow-x-auto leading-relaxed">
+                  <code>{currentSpec.code}</code>
+                </pre>
+              </div>
+
+              {/* Bottom Card Footer */}
+              <div className="mt-4 pt-3 border-t border-[var(--border-subtle)] flex items-center justify-between font-mono-code text-[10px] text-[var(--text-muted)]">
+                <span>Architecture Verified</span>
+                <span className="text-[var(--text-secondary)]">Node • PHP • Python</span>
+              </div>
+            </motion.div>
+          </div>
         </div>
 
-        {/* Bottom Hero Metric Bar */}
+        {/* Editorial Metric Strip */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.4 }}
-          className="mt-16 pt-8 border-t border-white/5 grid grid-cols-2 sm:grid-cols-4 gap-6 font-mono-code"
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="mt-14 pt-8 border-t border-[var(--border-subtle)] grid grid-cols-2 sm:grid-cols-4 gap-6 font-mono-code"
         >
           <div>
-            <p className="text-2xl sm:text-3xl font-semibold text-white tracking-tight">
+            <p className="text-xl sm:text-2xl font-bold text-[var(--text-primary)] tracking-tight">
               BPS Pelalawan
             </p>
-            <p className="text-xs text-zinc-500 mt-1 uppercase tracking-wider">
-              Internship Experience
+            <p className="text-[11px] text-[var(--text-muted)] mt-1 uppercase tracking-wider">
+              Government Internship
             </p>
           </div>
           <div>
-            <p className="text-2xl sm:text-3xl font-semibold text-white tracking-tight">
-              Production
+            <p className="text-xl sm:text-2xl font-bold text-[var(--text-primary)] tracking-tight">
+              REST APIs
             </p>
-            <p className="text-xs text-zinc-500 mt-1 uppercase tracking-wider">
-              Internal REST APIs
-            </p>
-          </div>
-          <div>
-            <p className="text-2xl sm:text-3xl font-semibold text-white tracking-tight">
-              Node &amp; PHP
-            </p>
-            <p className="text-xs text-zinc-500 mt-1 uppercase tracking-wider">
-              Primary Backend Stack
+            <p className="text-[11px] text-[var(--text-muted)] mt-1 uppercase tracking-wider">
+              Production Architecture
             </p>
           </div>
           <div>
-            <p className="text-2xl sm:text-3xl font-semibold text-white tracking-tight">
-              AI Bot
+            <p className="text-xl sm:text-2xl font-bold text-[var(--text-primary)] tracking-tight">
+              MySQL &amp; Postgres
             </p>
-            <p className="text-xs text-zinc-500 mt-1 uppercase tracking-wider">
-              Workflow Automations
+            <p className="text-[11px] text-[var(--text-muted)] mt-1 uppercase tracking-wider">
+              Relational Schemas
+            </p>
+          </div>
+          <div>
+            <p className="text-xl sm:text-2xl font-bold text-[var(--text-primary)] tracking-tight">
+              AI Automations
+            </p>
+            <p className="text-[11px] text-[var(--text-muted)] mt-1 uppercase tracking-wider">
+              Webhooks &amp; Workflows
             </p>
           </div>
         </motion.div>

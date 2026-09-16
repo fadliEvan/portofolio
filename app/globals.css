@@ -1,38 +1,83 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @layer base {
   :root {
     --font-geist-sans: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     --font-geist-mono: "Geist Mono", monospace;
+
+    /* Light Theme Tokens */
+    --bg-canvas: #faf8f5;
+    --bg-surface: #ffffff;
+    --bg-surface-elevated: #f4f3ef;
+    --bg-surface-subtle: rgba(0, 0, 0, 0.03);
+    --border-subtle: rgba(0, 0, 0, 0.08);
+    --border-strong: rgba(0, 0, 0, 0.15);
+    --text-primary: #121215;
+    --text-secondary: #52525b;
+    --text-muted: #71717a;
+    --accent: #4f46e5;
+    --accent-subtle: rgba(79, 70, 229, 0.08);
+    --accent-text: #4338ca;
+    --nav-bg: rgba(250, 248, 245, 0.82);
+    --selection-bg: #121215;
+    --selection-fg: #ffffff;
+  }
+
+  .dark {
+    /* Dark Theme Tokens */
+    --bg-canvas: #09090b;
+    --bg-surface: #121215;
+    --bg-surface-elevated: #18181c;
+    --bg-surface-subtle: rgba(255, 255, 255, 0.03);
+    --border-subtle: rgba(255, 255, 255, 0.08);
+    --border-strong: rgba(255, 255, 255, 0.16);
+    --text-primary: #f4f4f6;
+    --text-secondary: #a1a1aa;
+    --text-muted: #71717a;
+    --accent: #6366f1;
+    --accent-subtle: rgba(99, 102, 241, 0.12);
+    --accent-text: #818cf8;
+    --nav-bg: rgba(9, 9, 11, 0.82);
+    --selection-bg: #f4f4f6;
+    --selection-fg: #09090b;
   }
 }
 
 html {
   scroll-behavior: smooth;
-  color-scheme: dark;
 }
 
 body {
-  background-color: #08080a;
-  color: #ededed;
+  background-color: var(--bg-canvas);
+  color: var(--text-primary);
   font-family: var(--font-geist-sans);
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Subtle cinematic noise & film grain */
+::selection {
+  background-color: var(--selection-bg);
+  color: var(--selection-fg);
+}
+
+/* Subtle architectural grid lines background */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   background-image:
-    radial-gradient(circle at 50% 0%, rgba(120, 119, 198, 0.07), transparent 45%),
-    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-  background-size: 100% 100%, 72px 72px, 72px 72px;
+    linear-gradient(var(--border-subtle) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border-subtle) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(ellipse 80% 50% at 50% 0%, #000 70%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 50% at 50% 0%, #000 70%, transparent 100%);
   pointer-events: none;
   z-index: -1;
+  opacity: 0.4;
 }
 
 /* Custom scrollbar */
@@ -41,44 +86,47 @@ body::before {
 }
 
 ::-webkit-scrollbar-track {
-  background: #08080a;
+  background: var(--bg-canvas);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #27272a;
+  background: var(--border-strong);
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #3f3f46;
+  background: var(--text-muted);
 }
 
-/* Glass & light reflection utilities */
-.glass-panel {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+/* Glass & editorial utilities */
+.editorial-card {
+  background-color: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-.glass-pill {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(12px);
+.editorial-card:hover {
+  border-color: var(--border-strong);
 }
 
-.text-gradient {
-  background: linear-gradient(180deg, #ffffff 0%, #a1a1aa 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.text-gradient-subtle {
-  background: linear-gradient(180deg, #ffffff 20%, #71717a 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+.editorial-badge {
+  background-color: var(--bg-surface-subtle);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
 }
 
 .font-mono-code {
   font-family: var(--font-geist-mono);
+}
+
+/* Respect user's motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

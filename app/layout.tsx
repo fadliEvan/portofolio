@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "@/components/ThemeProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,23 +16,26 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Fadli Yurisman — Backend Engineer & Creative Developer",
+  title: "Fadli Yurisman — Backend Engineer & Software Developer",
   description:
-    "Backend Developer specializing in REST APIs, automation systems, database architecture, and AI-powered tools.",
+    "Backend Engineer specializing in high-performance REST APIs, database architecture, and AI-driven automation systems.",
   keywords: [
     "Fadli Yurisman",
     "Backend Engineer",
-    "Software Engineer",
+    "Software Developer",
     "Node.js",
     "FastAPI",
+    "PHP",
+    "PostgreSQL",
+    "MySQL",
     "REST API",
     "Portfolio",
   ],
   authors: [{ name: "Fadli Yurisman" }],
   openGraph: {
-    title: "Fadli Yurisman — Backend Engineer & Creative Developer",
+    title: "Fadli Yurisman — Backend Engineer & Software Developer",
     description:
-      "Backend Developer specializing in REST APIs, automation systems, database architecture, and AI-powered tools.",
+      "Backend Engineer specializing in high-performance REST APIs, database architecture, and AI-driven automation systems.",
     type: "website",
   },
 };
@@ -42,11 +46,30 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth selection:bg-white selection:text-black">
+    <html lang="en" suppressHydrationWarning className="scroll-smooth">
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var stored = localStorage.getItem('theme');
+                  var isDark = stored ? stored === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+                  if (isDark) {
+                    document.documentElement.classList.add('dark');
+                  } else {
+                    document.documentElement.classList.remove('dark');
+                  }
+                } catch (e) {}
+              })();
+            `,
+          }}
+        />
+      </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased bg-[#08080a] text-zinc-100 min-h-screen overflow-x-hidden`}
+        className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased min-h-screen overflow-x-hidden`}
       >
-        {children}
+        <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>
   );

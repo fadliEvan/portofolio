@@ -1,4 +1,4 @@
-export default async function run(page, ui) {
+export default async function run(page) {
   const viewports = [1440, 1280, 1024, 768, 480, 390];
   const results = [];
 
